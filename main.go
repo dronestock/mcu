@@ -6,6 +6,7 @@ import (
 
 	`github.com/mcuadros/go-defaults`
 	`github.com/storezhang/glog`
+	`github.com/storezhang/gox/field`
 )
 
 var notSupportLang = errors.New("不支持的语言")
@@ -25,6 +26,15 @@ func main() {
 	conf.version = env("VERSION")
 	conf.dependencies = parseDependencies(strings.Split(env("DEPENDENCIES"), ",")...)
 	defaults.SetDefaults(conf)
+
+	// 记录配置日志信息
+	logger.Info(
+		"功能加载配置",
+		field.String("lang", string(conf.lang)),
+		field.String("path", conf.path),
+		field.String("version", conf.version),
+		field.Strings("dependencies", conf.dependencyStrings()...),
+	)
 
 	switch conf.lang {
 	case langGo:

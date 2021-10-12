@@ -1,12 +1,17 @@
 package main
 
 import (
+	`fmt`
 	`strings`
 )
 
 type dependency struct {
 	module  string
 	version string
+}
+
+func (d *dependency) String() string {
+	return fmt.Sprintf("%s@%s", d.module, d.version)
 }
 
 func parseDependencies(originals ...string) (dependencies []*dependency) {
