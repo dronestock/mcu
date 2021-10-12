@@ -35,7 +35,7 @@ func main() {
 	case langJs:
 		err = js(conf)
 	default:
-		err = errors.New("不支持的语言")
+		err = errors.New("不支持的语言类型")
 	}
 
 	if nil != err {
