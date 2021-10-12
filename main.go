@@ -21,7 +21,7 @@ func main() {
 	// 取各种参数
 	conf := new(config)
 	conf.lang = lang(env("LANG"))
-	conf.path = env("PATH")
+	conf.path = env("FILEPATH")
 	conf.version = env("VERSION")
 	conf.dependencies = parseDependencies(strings.Split(env("DEPENDENCIES"), ",")...)
 	defaults.SetDefaults(conf)
