@@ -30,7 +30,7 @@ RUN set -ex \
     \
     \
     # 增加执行权限
-    && chmod +x /bin/git.sh \
+    && chmod +x /bin/mcu \
     \
     \
     \
