@@ -17,6 +17,7 @@ RUN set -ex \
     \
     \
     \
+    && sed -i "s/dl-cdn\.alpinelinux\.org/mirrors.ustc.edu.cn/" /etc/apk/repositories \
     && apk update \
     && apk --no-cache add tzdata go \
     \
