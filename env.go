@@ -12,11 +12,11 @@ import (
 func env(envs ...string) (config string) {
 	for _, _env := range envs {
 		_env = strings.ToUpper(_env)
-		if config = os.Getenv(_env); "" != config {
+		if config = os.Getenv(fmt.Sprintf("PLUGIN_%s", _env)); "" != config {
 			return
 		}
 
-		if config = os.Getenv(fmt.Sprintf("PLUGIN_%s", _env)); "" != config {
+		if config = os.Getenv(_env); "" != config {
 			return
 		}
 	}
