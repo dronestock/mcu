@@ -4,7 +4,6 @@ import (
 	`path`
 
 	`github.com/storezhang/gox`
-	`github.com/storezhang/replace`
 )
 
 func js(conf *config) (err error) {
@@ -14,11 +13,10 @@ func js(conf *config) (err error) {
 		conf.path = path.Join(conf.path, "package.json")
 	}
 
-	_replace := replace.NewJSONReplace(gox.GetFilename(conf.path), replace.JSONReplaceElement{
-		Path:  "version",
-		Value: conf.version,
+	err = json(conf.path, jsonElement{
+		path:  "version",
+		value: conf.version,
 	})
-	err = _replace.Replace(path.Dir(conf.path))
 
 	return
 }
