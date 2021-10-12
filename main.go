@@ -9,6 +9,8 @@ import (
 	`github.com/storezhang/gox/field`
 )
 
+var notSupportLang = errors.New("不支持的语言")
+
 func main() {
 	var err error
 	// 有错误，输出错误日志
@@ -35,7 +37,7 @@ func main() {
 	case langJs:
 		err = js(conf)
 	default:
-		err = errors.New("不支持的语言")
+		err = notSupportLang
 	}
 
 	if nil != err {
