@@ -6,7 +6,6 @@ import (
 
 	`github.com/mcuadros/go-defaults`
 	`github.com/storezhang/glog`
-	`github.com/storezhang/gox/field`
 )
 
 var notSupportLang = errors.New("不支持的语言")
@@ -31,16 +30,16 @@ func main() {
 	case langGo:
 		fallthrough
 	case langGolang:
-		err = golang(conf)
+		err = golang(conf, logger)
 	case langJavascript:
 		fallthrough
 	case langJs:
-		err = js(conf)
+		err = js(conf, logger)
 	default:
 		err = notSupportLang
 	}
 
 	if nil != err {
-		logger.Error("处理失败", field.Error(err))
+		panic(err)
 	}
 }

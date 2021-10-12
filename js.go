@@ -3,10 +3,11 @@ package main
 import (
 	`path`
 
+	`github.com/storezhang/glog`
 	`github.com/storezhang/gox`
 )
 
-func js(conf *config) (err error) {
+func js(conf *config, _ glog.Logger) (err error) {
 	if dir, dirErr := gox.IsDir(conf.path); nil != dirErr {
 		panic(dirErr)
 	} else if dir {

@@ -5,10 +5,11 @@ import (
 	`os/exec`
 	`path`
 
+	`github.com/storezhang/glog`
 	`github.com/storezhang/gox`
 )
 
-func golang(conf *config) (err error) {
+func golang(conf *config, _ glog.Logger) (err error) {
 	if dir, dirErr := gox.IsDir(conf.path); nil != dirErr {
 		panic(dirErr)
 	} else if dir {
