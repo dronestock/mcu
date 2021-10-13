@@ -29,7 +29,7 @@ func main() {
 
 	// 记录配置日志信息
 	logger.Info(
-		"功能加载配置完成",
+		"加载配置完成",
 		field.String("lang", string(conf.lang)),
 		field.String("path", conf.path),
 		field.String("version", conf.version),
