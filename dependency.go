@@ -16,9 +16,12 @@ func (d *dependency) String() string {
 
 func parseDependencies(originals ...string) (dependencies []*dependency) {
 	// 防止有nil的依赖，因为originals始终有一个值
-	dependencies = make([]*dependency, 0, 0)
+	dependencies = make([]*dependency, 0)
 	for _, original := range originals {
-		dependencies = append(dependencies, parseDependency(original))
+		_dependency := parseDependency(original)
+		if nil != _dependency {
+			dependencies = append(dependencies, parseDependency(original))
+		}
 	}
 
 	return
