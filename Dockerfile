@@ -14,7 +14,7 @@ RUN set -ex \
     \
     \
     && apk update \
-    && apk --no-cache add go \
+    && apk --no-cache add go yq \
     \
     \
     \
