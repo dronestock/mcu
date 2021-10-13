@@ -15,7 +15,7 @@ func (d *dependency) String() string {
 }
 
 func parseDependencies(originals ...string) (dependencies []*dependency) {
-	// 防止有nil的依赖，因为originals始终有一个值
+	// 防止有nil的依赖，因为originals始终有一个值（上层在用strings.Split时，空字符串也会分隔成一个有一个空字符串的数组）
 	dependencies = make([]*dependency, 0)
 	for _, original := range originals {
 		_dependency := parseDependency(original)
