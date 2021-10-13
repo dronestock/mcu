@@ -3,6 +3,7 @@ package main
 import (
 	`fmt`
 	`path`
+	`strings`
 
 	`github.com/storezhang/glog`
 	`github.com/storezhang/gox`
@@ -21,8 +22,9 @@ func js(conf *config, _ glog.Logger) (err error) {
 		value: conf.version,
 	})
 	for _, _dependency := range conf.dependencies {
+		module := strings.ReplaceAll(_dependency.module, `.`, `\.`)
 		dependencies = append(dependencies, jsonElement{
-			path:  fmt.Sprintf("dependencies.%s", _dependency.module),
+			path:  fmt.Sprintf("dependencies.%s", module),
 			value: _dependency.version,
 		})
 	}

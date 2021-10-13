@@ -29,7 +29,9 @@ func parseDependencies(originals ...string) (dependencies []*dependency) {
 
 func parseDependency(original string) (dependency *dependency) {
 	var _configs []string
-	defer newDependency(_configs)
+	defer func() {
+		dependency = newDependency(_configs)
+	}()
 
 	if _configs = strings.Split(original, "@"); 2 == len(_configs) {
 		return
