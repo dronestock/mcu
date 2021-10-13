@@ -5,6 +5,7 @@ const (
 	langGolang     lang = "golang"
 	langJs         lang = "js"
 	langJavascript lang = "javascript"
+	langDart       lang = "dart"
 )
 
 type lang string

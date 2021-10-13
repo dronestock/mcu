@@ -45,6 +45,8 @@ func main() {
 		fallthrough
 	case langJs:
 		err = js(conf, logger)
+	case langDart:
+		err = dart(conf, logger)
 	default:
 		err = notSupportLang
 	}
