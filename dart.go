@@ -2,19 +2,21 @@ package main
 
 import (
 	`fmt`
+	`os`
 	`os/exec`
 	`path`
 	`strings`
 
 	`github.com/storezhang/glog`
 	`github.com/storezhang/gox`
+	`github.com/storezhang/gox/field`
 )
 
-func dart(conf *config, _ glog.Logger) (err error) {
-	if dir, dirErr := gox.IsDir(conf.path); nil != dirErr {
+func dart(conf *config, logger glog.Logger) (err error) {
+	if dir, dirErr := gox.IsDir(conf.filepath); nil != dirErr {
 		panic(dirErr)
 	} else if dir {
-		conf.path = path.Join(conf.path, `pubspec.yaml`)
+		conf.filepath = path.Join(conf.filepath, `pubspec.yaml`)
 	}
 
 	commands := []string{`eval`}
@@ -31,13 +33,17 @@ func dart(conf *config, _ glog.Logger) (err error) {
 			fmt.Sprintf(`%s=%s`, version, _dependency.version),
 		)
 	}
-	commands = append(commands, strings.Join(updates, ` | `), conf.path)
+	commands = append(commands, strings.Join(updates, ` | `), conf.filepath)
 	commands = append(commands, `--inplace`, `--prettyPrint`)
 
 	// 执行命令
 	cmd := exec.Command(`yq`, commands...)
+	cmd.Env = os.Environ()
 	cmd.Env = append(cmd.Env, environments...)
-	err = cmd.Wait()
+	if err = cmd.Run(); nil != err {
+		output, _ := cmd.CombinedOutput()
+		logger.Warn("修改Dart模块描述文件出错", field.String("output", string(output)), field.Error(err))
+	}
 
 	return
 }

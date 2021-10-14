@@ -10,10 +10,10 @@ import (
 )
 
 func js(conf *config, _ glog.Logger) (err error) {
-	if dir, dirErr := gox.IsDir(conf.path); nil != dirErr {
+	if dir, dirErr := gox.IsDir(conf.filepath); nil != dirErr {
 		panic(dirErr)
 	} else if dir {
-		conf.path = path.Join(conf.path, "package.json")
+		conf.filepath = path.Join(conf.filepath, "package.json")
 	}
 
 	dependencies := make([]jsonElement, 0, len(conf.dependencies)+1)
@@ -28,7 +28,7 @@ func js(conf *config, _ glog.Logger) (err error) {
 			value: _dependency.version,
 		})
 	}
-	err = json(conf.path, dependencies...)
+	err = json(conf.filepath, dependencies...)
 
 	return
 }

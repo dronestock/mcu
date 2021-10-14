@@ -22,7 +22,7 @@ func main() {
 	// 取各种参数
 	conf := new(config)
 	conf.lang = lang(env("LANG"))
-	conf.path = env("FILEPATH")
+	conf.filepath = env("FILEPATH")
 	conf.version = env("VERSION")
 	conf.dependencies = parseDependencies(strings.Split(env("DEPENDENCIES"), ",")...)
 	defaults.SetDefaults(conf)
@@ -31,7 +31,7 @@ func main() {
 	logger.Info(
 		"加载配置完成",
 		field.String("lang", string(conf.lang)),
-		field.String("path", conf.path),
+		field.String("filepath", conf.filepath),
 		field.String("version", conf.version),
 		field.Strings("dependencies", conf.dependencyStrings()...),
 	)

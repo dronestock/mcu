@@ -9,12 +9,22 @@ LABEL Description="Drone持续集成模块化插件，可以修改模块描述�
 COPY mcu /bin
 
 
+# Yaml修改程序版本
+ENV YQ_VERSION 4.13.4
+ENV YQ_BINARY yq_linux_amd64
+
+
 RUN set -ex \
     \
     \
     \
     && apk update \
-    && apk --no-cache add go yq \
+    && apk --no-cache add go \
+    \
+    \
+    \
+    && wget https://download.fastgit.org/mikefarah/yq/releases/download/v${YQ_VERSION}/${YQ_BINARY} --output-document /usr/bin/yq \
+    && chmod +x /usr/bin/yq \
     \
     \
     \

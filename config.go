@@ -2,7 +2,7 @@ package main
 
 type config struct {
 	lang         lang
-	path         string
+	filepath     string
 	version      string
 	dependencies []*dependency
 }
