@@ -29,8 +29,8 @@ func dart(conf *config, logger glog.Logger) (err error) {
 		// 使用随机字符串是为了防止原始字符串里面出现环境变量不允许的字符
 		version := gox.RandString(16)
 		if _replace, ok := replacesMap[_dependency.name]; ok == true {
-			updates = append(updates, fmt.Sprintf(`.dependencies."%s.git.url" = strenv(%s)`, _dependency.name, _replace.to.name))
-			updates = append(updates, fmt.Sprintf(`.dependencies."%s.git.ref = strenv(%s)`, _dependency.name, _replace.to.version))
+			updates = append(updates, fmt.Sprintf(`.dependencies."%s".git.url = strenv(%s)`, _dependency.name, _replace.to.name))
+			updates = append(updates, fmt.Sprintf(`.dependencies."%s".git.ref = strenv(%s)`, _dependency.name, _replace.to.version))
 		} else {
 			updates = append(updates, fmt.Sprintf(`.dependencies."%s" = strenv(%s)`, _dependency.name, version))
 		}
