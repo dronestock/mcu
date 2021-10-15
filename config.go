@@ -4,8 +4,8 @@ type config struct {
 	lang         lang
 	filepath     string
 	version      string
-	dependencies []*module
-	replaces     []*replace
+	dependencies []module
+	replaces     []replace
 }
 
 func (c *config) dependencyStrings() (strings []string) {
@@ -17,9 +17,9 @@ func (c *config) dependencyStrings() (strings []string) {
 	return
 }
 
-func (c *config) isReplaced(_module *module) (replaced bool, to *module) {
+func (c *config) isReplaced(_module module) (replaced bool, to module) {
 	for _, _replace := range c.replaces {
-		if _module.name == _replace.from.name && nil != _replace.to {
+		if _module.name == _replace.from.name {
 			replaced = true
 			to = _replace.to
 		}

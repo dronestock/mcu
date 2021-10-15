@@ -14,20 +14,17 @@ func (d *module) String() string {
 	return fmt.Sprintf("%s@%s", d.name, d.version)
 }
 
-func parseMoules(originals ...string) (modules []*module) {
+func parseMoules(originals ...string) (modules []module) {
 	// 防止有nil的依赖，因为originals始终有一个值（上层在用strings.Split时，空字符串也会分隔成一个有一个空字符串的数组）
-	modules = make([]*module, 0)
+	modules = make([]module, 0)
 	for _, original := range originals {
-		_module := parseModule(original)
-		if nil != _module {
-			modules = append(modules, _module)
-		}
+		modules = append(modules, parseModule(original))
 	}
 
 	return
 }
 
-func parseModule(original string) (module *module) {
+func parseModule(original string) (module module) {
 	var _configs []string
 	defer func() {
 		module = newModule(_configs)
@@ -43,10 +40,9 @@ func parseModule(original string) (module *module) {
 	return
 }
 
-func newModule(configs []string) (_module *module) {
+func newModule(configs []string) (_module module) {
 	length := len(configs)
 	if nil != configs {
-		_module = new(module)
 		if 1 == length {
 			_module.name = configs[0]
 		} else if 2 <= length {
