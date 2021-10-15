@@ -49,8 +49,8 @@ func newModule(configs []string) (_module *module) {
 		_module = new(module)
 		if 1 == length {
 			_module.name = configs[0]
-		}
-		if 2 <= length {
+		} else if 2 <= length {
+			_module.name = configs[0]
 			_module.version = configs[1]
 		}
 	}
