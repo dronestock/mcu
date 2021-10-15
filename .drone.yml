@@ -63,7 +63,7 @@ steps:
       compress: true
       mirror: https://docker.mirrors.ustc.edu.cn
       username: storezhang
-      auth:
+      password:
         from_secret: docker_token
 
 volumes:
