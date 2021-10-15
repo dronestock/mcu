@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../docker-alpine/.idea/docker-alpine.iml" filepath="$PROJECT_DIR$/../docker-alpine/.idea/docker-alpine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../docker-jira/.idea/docker-jira.iml" filepath="$PROJECT_DIR$/../docker-jira/.idea/docker-jira.iml" />
       <module fileurl="file://$PROJECT_DIR$/../docker-protobuf/.idea/docker-protobuf.iml" filepath="$PROJECT_DIR$/../docker-protobuf/.idea/docker-protobuf.iml" />
       <module fileurl="file://$PROJECT_DIR$/../drone-plugin-cos/.idea/drone-plugin-cos.iml" filepath="$PROJECT_DIR$/../drone-plugin-cos/.idea/drone-plugin-cos.iml" />
       <module fileurl="file://$PROJECT_DIR$/../drone-plugin-git/.idea/drone-plugin-git.iml" filepath="$PROJECT_DIR$/../drone-plugin-git/.idea/drone-plugin-git.iml" />
