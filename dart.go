@@ -24,13 +24,12 @@ func dart(conf *config, logger glog.Logger) (err error) {
 	updates := make([]string, 0, len(conf.dependencies))
 	environments = append(environments, fmt.Sprintf(`%s=%s`, "version", conf.version))
 	updates = append(updates, `.version=strenv(version)`)
-	replacesMap := toReplacesMap(conf.replaces)
 	for _, _dependency := range conf.dependencies {
 		// 使用随机字符串是为了防止原始字符串里面出现环境变量不允许的字符
 		version := gox.RandString(16)
-		if _replace, ok := replacesMap[_dependency.name]; ok == true {
-			updates = append(updates, fmt.Sprintf(`.dependencies.%s.git.url = %s`, _dependency.name, _replace.to.name))
-			updates = append(updates, fmt.Sprintf(`.dependencies.%s.git.ref = %s`, _dependency.name, _replace.to.version))
+		if replaced, _replace := conf.isReplaced(_dependency); replaced == true {
+			updates = append(updates, fmt.Sprintf(`.dependencies.%s.git.url = %s`, _dependency.name, _replace.name))
+			updates = append(updates, fmt.Sprintf(`.dependencies.%s.git.ref = %s`, _dependency.name, _replace.version))
 		} else {
 			updates = append(updates, fmt.Sprintf(`.dependencies.%s = strenv(%s)`, _dependency.name, version))
 		}
@@ -51,13 +50,5 @@ func dart(conf *config, logger glog.Logger) (err error) {
 		logger.Warn(`修改Dart模块描述文件出错`, field.String(`output`, string(output)), field.Error(err))
 	}
 
-	return
-}
-
-func toReplacesMap(replaces []replace) (replacesMap map[string]replace) {
-	replacesMap = make(map[string]replace)
-	for _, _replace := range replaces {
-		replacesMap[_replace.from.name] = _replace
-	}
 	return
 }
