@@ -64,7 +64,7 @@ steps:
       mirror: https://docker.mirrors.ustc.edu.cn
       username: storezhang
       password:
-        from_secret: docker_password
+        from_secret: docker_token
 
 volumes:
   - name: deps
