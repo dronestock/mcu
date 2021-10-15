@@ -17,8 +17,7 @@ func (c *config) dependencyStrings() (strings []string) {
 	return
 }
 
-// nolint:unused
-func (c *config) isReplaced(_module module) (replaced bool, to module) {
+func (c *config) isReplaced(_module module) (to module, replaced bool) {
 	for _, _replace := range c.replaces {
 		if _module.name == _replace.from.name {
 			replaced = true
