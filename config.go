@@ -28,7 +28,7 @@ func (c *config) isReplaced(_module module) (replaced bool, to module) {
 	return
 }
 
-func (c *config) toReplacesMap() (replacesMap map[string]replace) {
+func (c *config) getReplacesMap() (replacesMap map[string]replace) {
 	replacesMap = make(map[string]replace)
 	for _, _replace := range c.replaces {
 		replacesMap[_replace.from.name] = _replace
