@@ -16,3 +16,14 @@ func (c *config) dependencyStrings() (strings []string) {
 
 	return
 }
+
+func (c *config) isReplaced(_module *module) (replaced bool, to *module) {
+	for _, _replace := range c.replaces {
+		if _module.name == _replace.from.name && nil != _replace.to {
+			replaced = true
+			to = _replace.to
+		}
+	}
+
+	return
+}
