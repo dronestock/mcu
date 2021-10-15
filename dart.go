@@ -29,10 +29,10 @@ func dart(conf *config, logger glog.Logger) (err error) {
 		// 使用随机字符串是为了防止原始字符串里面出现环境变量不允许的字符
 		version := gox.RandString(16)
 		if _replace, ok := replacesMap[_dependency.name]; ok == true {
-			updates = append(updates, fmt.Sprintf(`.dependencies."%s".git.url = strenv(%s)`, _dependency.name, _replace.to.name))
-			updates = append(updates, fmt.Sprintf(`.dependencies."%s".git.ref = strenv(%s)`, _dependency.name, _replace.to.version))
+			updates = append(updates, fmt.Sprintf(`.dependencies.%s.git.url = strenv(%s)`, _dependency.name, _replace.to.name))
+			updates = append(updates, fmt.Sprintf(`.dependencies.%s.git.ref = strenv(%s)`, _dependency.name, _replace.to.version))
 		} else {
-			updates = append(updates, fmt.Sprintf(`.dependencies."%s" = strenv(%s)`, _dependency.name, version))
+			updates = append(updates, fmt.Sprintf(`.dependencies.%s = strenv(%s)`, _dependency.name, version))
 		}
 		environments = append(
 			environments,
@@ -54,8 +54,8 @@ func dart(conf *config, logger glog.Logger) (err error) {
 	return
 }
 
-func toReplacesMap(replaces []*replace) (replacesMap map[string]*replace) {
-	replacesMap = make(map[string]*replace)
+func toReplacesMap(replaces []replace) (replacesMap map[string]replace) {
+	replacesMap = make(map[string]replace)
 	for _, _replace := range replaces {
 		replacesMap[_replace.from.name] = _replace
 	}
