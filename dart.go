@@ -27,7 +27,7 @@ func dart(conf *config, logger glog.Logger) (err error) {
 	for _, _dependency := range conf.dependencies {
 		// 使用随机字符串是为了防止原始字符串里面出现环境变量不允许的字符
 		version := gox.RandString(16)
-		updates = append(updates, fmt.Sprintf(`.dependencies."%s" = strenv(%s)`, _dependency.module, version))
+		updates = append(updates, fmt.Sprintf(`.dependencies."%s" = strenv(%s)`, _dependency.name, version))
 		environments = append(
 			environments,
 			fmt.Sprintf(`%s=%s`, version, _dependency.version),

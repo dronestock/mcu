@@ -4,7 +4,8 @@ type config struct {
 	lang         lang
 	filepath     string
 	version      string
-	dependencies []*dependency
+	dependencies []*module
+	replaces     []*replace
 }
 
 func (c *config) dependencyStrings() (strings []string) {

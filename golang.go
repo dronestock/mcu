@@ -21,7 +21,7 @@ func golang(conf *config, _ glog.Logger) (err error) {
 		"edit",
 	}
 	for _, _dependency := range conf.dependencies {
-		commands = append(commands, "-require", fmt.Sprintf("%s@%s", _dependency.module, _dependency.version))
+		commands = append(commands, "-require", fmt.Sprintf("%s@%s", _dependency.name, _dependency.version))
 	}
 	commands = append(commands, conf.filepath)
 

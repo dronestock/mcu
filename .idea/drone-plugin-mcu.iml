@@ -9,5 +9,6 @@
     <orderEntry type="module" module-name="drone-plugin-git" />
     <orderEntry type="module" module-name="replace" />
     <orderEntry type="module" module-name="docker-alpine" />
+    <orderEntry type="module" module-name="docker-protobuf" />
   </component>
 </module>

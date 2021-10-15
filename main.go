@@ -24,7 +24,8 @@ func main() {
 	conf.lang = lang(env("LANG"))
 	conf.filepath = env("FILEPATH")
 	conf.version = env("VERSION")
-	conf.dependencies = parseDependencies(strings.Split(env("DEPENDENCIES"), ",")...)
+	conf.dependencies = parseMoules(strings.Split(env("DEPENDENCIES"), ",")...)
+	conf.replaces = parseReplaces(strings.Split(env("REPLACES"), ",")...)
 	defaults.SetDefaults(conf)
 
 	// 记录配置日志信息
