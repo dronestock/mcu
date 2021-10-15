@@ -22,9 +22,9 @@ func js(conf *config, _ glog.Logger) (err error) {
 		value: conf.version,
 	})
 	for _, _dependency := range conf.dependencies {
-		module := strings.ReplaceAll(_dependency.name, `.`, `\.`)
+		_module := strings.ReplaceAll(_dependency.name, `.`, `\.`)
 		dependencies = append(dependencies, jsonElement{
-			path:  fmt.Sprintf("dependencies.%s", module),
+			path:  fmt.Sprintf("dependencies.%s", _module),
 			value: _dependency.version,
 		})
 	}
