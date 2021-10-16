@@ -50,6 +50,8 @@ func main() {
 		err = dart(conf, logger)
 	case langMaven:
 		err = maven(conf, logger)
+	case langGradle:
+		err = gradle(conf, logger)
 	default:
 		err = notSupportLang
 	}

@@ -7,6 +7,7 @@ const (
 	langJavascript lang = "javascript"
 	langDart       lang = "dart"
 	langMaven      lang = "maven"
+	langGradle     lang = "gradle"
 )
 
 type lang string
