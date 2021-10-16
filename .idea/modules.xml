@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/../drone-plugin-git/.idea/drone-plugin-git.iml" filepath="$PROJECT_DIR$/../drone-plugin-git/.idea/drone-plugin-git.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/drone-plugin-mcu.iml" filepath="$PROJECT_DIR$/.idea/drone-plugin-mcu.iml" />
       <module fileurl="file://$PROJECT_DIR$/../replace/.idea/replace.iml" filepath="$PROJECT_DIR$/../replace/.idea/replace.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ubuntu-setup/.idea/ubuntu-setup.iml" filepath="$PROJECT_DIR$/../ubuntu-setup/.idea/ubuntu-setup.iml" />
     </modules>
   </component>
 </project>
