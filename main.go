@@ -48,6 +48,8 @@ func main() {
 		err = js(conf, logger)
 	case langDart:
 		err = dart(conf, logger)
+	case langMaven:
+		err = maven(conf, logger)
 	default:
 		err = notSupportLang
 	}
@@ -55,4 +57,5 @@ func main() {
 	if nil != err {
 		panic(err)
 	}
+	logger.Info("修改模块描述文件成功", field.String("filepath", conf.filepath))
 }

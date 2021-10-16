@@ -7,9 +7,10 @@ import (
 
 	`github.com/storezhang/glog`
 	`github.com/storezhang/gox`
+	`github.com/storezhang/gox/field`
 )
 
-func golang(conf *config, _ glog.Logger) (err error) {
+func golang(conf *config, logger glog.Logger) (err error) {
 	if dir, dirErr := gox.IsDir(conf.filepath); nil != dirErr {
 		panic(dirErr)
 	} else if dir {
@@ -26,7 +27,11 @@ func golang(conf *config, _ glog.Logger) (err error) {
 	commands = append(commands, conf.filepath)
 
 	// 执行命令
-	err = exec.Command(`go`, commands...).Run()
+	cmd := exec.Command(`go`, commands...)
+	if err = cmd.Run(); nil != err {
+		output, _ := cmd.CombinedOutput()
+		logger.Warn(`修改Golang模块描述文件出错`, field.String(`output`, string(output)), field.Error(err))
+	}
 
 	return
 }
