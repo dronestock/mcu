@@ -35,6 +35,7 @@ func main() {
 		field.String(`filepath`, conf.filepath),
 		field.String(`version`, conf.version),
 		field.Strings(`dependencies`, conf.dependencyStrings()...),
+		field.Strings(`replaces`, conf.replaceStrings()...),
 	)
 
 	switch conf.lang {

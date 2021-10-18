@@ -10,8 +10,8 @@ type module struct {
 	version string
 }
 
-func (d *module) String() string {
-	return fmt.Sprintf("%s@%s", d.name, d.version)
+func (m *module) String() string {
+	return fmt.Sprintf("%s@%s", m.name, m.version)
 }
 
 func parseMoules(originals ...string) (modules []module) {

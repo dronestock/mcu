@@ -1,12 +1,17 @@
 package main
 
 import (
+	`fmt`
 	`strings`
 )
 
 type replace struct {
 	from module
 	to   module
+}
+
+func (r *replace) String() string {
+	return fmt.Sprintf("%s => %s", r.from.String(), r.to.String())
 }
 
 func parseReplaces(originals ...string) (replaces []replace) {
