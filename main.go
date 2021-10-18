@@ -2,7 +2,6 @@ package main
 
 import (
 	`errors`
-	`io/ioutil`
 	`strings`
 
 	`github.com/mcuadros/go-defaults`
@@ -57,12 +56,9 @@ func main() {
 		err = notSupportLang
 	}
 
-	// 读取最终的文件内容
-	content, _ := ioutil.ReadFile(conf.filepath)
-
 	if nil != err {
-		logger.Fatal(`修改模块描述文件失败`, field.Strings(`content`, string(content)), field.Error(err))
+		logger.Fatal(`修改模块描述文件失败`, field.Error(err))
 	} else {
-		logger.Info(`修改模块描述文件成功`, field.Strings(`content`, string(content)), field.String(`filepath`, conf.filepath))
+		logger.Info(`修改模块描述文件成功`, field.String(`filepath`, conf.filepath))
 	}
 }
