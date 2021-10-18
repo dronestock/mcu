@@ -16,19 +16,19 @@ func js(conf *config, _ glog.Logger) (err error) {
 		conf.filepath = path.Join(conf.filepath, "package.json")
 	}
 
-	dependencies := make([]jsonElement, 0, len(conf.dependencies)+1)
-	dependencies = append(dependencies, jsonElement{
+	elements := make([]jsonElement, 0, len(conf.dependencies)+1)
+	elements = append(elements, jsonElement{
 		path:  "version",
 		value: conf.version,
 	})
 	for _, _dependency := range conf.dependencies {
 		_module := strings.ReplaceAll(_dependency.name, `.`, `\.`)
-		dependencies = append(dependencies, jsonElement{
-			path:  fmt.Sprintf("dependencies.%s", _module),
+		elements = append(elements, jsonElement{
+			path:  fmt.Sprintf("elements.%s", _module),
 			value: _dependency.version,
 		})
 	}
-	err = json(conf.filepath, dependencies...)
+	err = json(conf.filepath, elements...)
 
 	return
 }

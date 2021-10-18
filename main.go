@@ -2,6 +2,7 @@ package main
 
 import (
 	`errors`
+	`io/ioutil`
 	`strings`
 
 	`github.com/mcuadros/go-defaults`
@@ -21,20 +22,20 @@ func main() {
 
 	// 取各种参数
 	conf := new(config)
-	conf.lang = lang(env("LANG"))
-	conf.filepath = env("FILEPATH")
-	conf.version = env("VERSION")
-	conf.dependencies = parseMoules(strings.Split(env("DEPENDENCIES"), ",")...)
-	conf.replaces = parseReplaces(strings.Split(env("REPLACES"), ",")...)
+	conf.lang = lang(env(`LANG`))
+	conf.filepath = env(`FILEPATH`)
+	conf.version = env(`VERSION`)
+	conf.dependencies = parseMoules(strings.Split(env(`DEPENDENCIES`), `,`)...)
+	conf.replaces = parseReplaces(strings.Split(env(`REPLACES`), `,`)...)
 	defaults.SetDefaults(conf)
 
 	// 记录配置日志信息
 	logger.Info(
-		"加载配置完成",
-		field.String("lang", string(conf.lang)),
-		field.String("filepath", conf.filepath),
-		field.String("version", conf.version),
-		field.Strings("dependencies", conf.dependencyStrings()...),
+		`加载配置完成`,
+		field.String(`lang`, string(conf.lang)),
+		field.String(`filepath`, conf.filepath),
+		field.String(`version`, conf.version),
+		field.Strings(`dependencies`, conf.dependencyStrings()...),
 	)
 
 	switch conf.lang {
@@ -56,8 +57,12 @@ func main() {
 		err = notSupportLang
 	}
 
+	// 读取最终的文件内容
+	content, _ := ioutil.ReadFile(conf.filepath)
+
 	if nil != err {
-		panic(err)
+		logger.Fatal(`修改模块描述文件失败`, field.Strings(`content`, string(content)), field.Error(err))
+	} else {
+		logger.Info(`修改模块描述文件成功`, field.Strings(`content`, string(content)), field.String(`filepath`, conf.filepath))
 	}
-	logger.Info("修改模块描述文件成功", field.String("filepath", conf.filepath))
 }
