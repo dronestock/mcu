@@ -50,7 +50,13 @@ func dart(conf *config, logger glog.Logger) (err error) {
 	cmd.Env = append(cmd.Env, environments...)
 	if err = cmd.Run(); nil != err {
 		output, _ := cmd.CombinedOutput()
-		logger.Warn(`修改Dart模块描述文件出错`, field.String(`output`, string(output)), field.Error(err))
+		logger.Warn(
+			`修改Dart模块描述文件出错`,
+			field.String(`output`, string(output)),
+			field.Strings(`environments`, environments...),
+			field.Strings(`command`, commands...),
+			field.Error(err),
+		)
 	}
 
 	return
