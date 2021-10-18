@@ -21,7 +21,7 @@ func parseMoules(key string) (modules []module) {
 	}
 
 	originals := strings.Split(_config, `,`)
-	modules = make([]module, len(originals))
+	modules = make([]module, 0, len(originals))
 	for _, original := range originals {
 		modules = append(modules, parseModule(original))
 	}

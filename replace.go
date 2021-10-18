@@ -21,7 +21,7 @@ func parseReplaces(key string) (replaces []replace) {
 	}
 
 	originals := strings.Split(_config, `,`)
-	replaces = make([]replace, len(originals))
+	replaces = make([]replace, 0, len(originals))
 	for _, original := range originals {
 		replaces = append(replaces, parseReplace(original))
 	}
