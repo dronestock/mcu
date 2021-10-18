@@ -14,9 +14,14 @@ func (m *module) String() string {
 	return fmt.Sprintf("%s@%s", m.name, m.version)
 }
 
-func parseMoules(originals ...string) (modules []module) {
-	// 防止有nil的依赖，因为originals始终有一个值（上层在用strings.Split时，空字符串也会分隔成一个有一个空字符串的数组）
-	modules = make([]module, 0)
+func parseMoules(key string) (modules []module) {
+	_config := env(key)
+	if "" == _config {
+		return
+	}
+
+	originals := strings.Split(_config, `,`)
+	modules = make([]module, len(originals), len(originals))
 	for _, original := range originals {
 		modules = append(modules, parseModule(original))
 	}

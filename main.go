@@ -2,7 +2,6 @@ package main
 
 import (
 	`errors`
-	`strings`
 
 	`github.com/mcuadros/go-defaults`
 	`github.com/storezhang/glog`
@@ -24,8 +23,8 @@ func main() {
 	conf.lang = lang(env(`LANG`))
 	conf.filepath = env(`FILEPATH`)
 	conf.version = env(`VERSION`)
-	conf.dependencies = parseMoules(strings.Split(env(`DEPENDENCIES`), `,`)...)
-	conf.replaces = parseReplaces(strings.Split(env(`REPLACES`), `,`)...)
+	conf.dependencies = parseMoules(`DEPENDENCIES`)
+	conf.replaces = parseReplaces(`REPLACES`)
 	defaults.SetDefaults(conf)
 
 	// 记录配置日志信息

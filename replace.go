@@ -14,9 +14,14 @@ func (r *replace) String() string {
 	return fmt.Sprintf("%s => %s", r.from.String(), r.to.String())
 }
 
-func parseReplaces(originals ...string) (replaces []replace) {
-	// 防止有nil的依赖，因为originals始终有一个值（上层在用strings.Split时，空字符串也会分隔成一个有一个空字符串的数组）
-	replaces = make([]replace, 0)
+func parseReplaces(key string) (replaces []replace) {
+	_config := env(key)
+	if "" == _config {
+		return
+	}
+
+	originals := strings.Split(_config, `,`)
+	replaces = make([]replace, len(originals), len(originals))
 	for _, original := range originals {
 		replaces = append(replaces, parseReplace(original))
 	}
