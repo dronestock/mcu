@@ -7,7 +7,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="drone-plugin-cos" />
     <orderEntry type="module" module-name="drone-plugin-git" />
-    <orderEntry type="module" module-name="replace" />
     <orderEntry type="module" module-name="docker-alpine" />
     <orderEntry type="module" module-name="docker-protobuf" />
     <orderEntry type="module" module-name="docker-jira" />

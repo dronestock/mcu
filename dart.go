@@ -42,7 +42,7 @@ func dart(conf *config, logger glog.Logger) (err error) {
 		)
 	}
 	commands = append(commands, strings.Join(updates, ` | `), conf.filepath)
-	commands = append(commands, `--inplace`, `--prettyPrint`)
+	commands = append(commands, `--inplace`, `--prettyPrint`, `--verbose`)
 
 	// 执行命令
 	cmd := exec.Command(`yq`, commands...)
