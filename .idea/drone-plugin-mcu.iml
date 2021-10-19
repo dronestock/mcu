@@ -11,5 +11,6 @@
     <orderEntry type="module" module-name="docker-protobuf" />
     <orderEntry type="module" module-name="docker-jira" />
     <orderEntry type="module" module-name="ubuntu-setup" />
+    <orderEntry type="module" module-name="ubuntu-setup" />
   </component>
 </module>
