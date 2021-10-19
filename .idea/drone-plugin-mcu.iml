@@ -15,5 +15,6 @@
     <orderEntry type="module" module-name="ula" />
     <orderEntry type="module" module-name="pangu-schedule" />
     <orderEntry type="module" module-name="docker-protoc-go-inject-tag" />
+    <orderEntry type="module" module-name="drone-protobuf-go" />
   </component>
 </module>
