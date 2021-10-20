@@ -4,6 +4,5 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../docker-protoc-go-inject-tag" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../drone-plugin-git" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../pangu-schedule" vcs="Git" />
   </component>
 </project>

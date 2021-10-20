@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/../drone-plugin-git/.idea/drone-plugin-git.iml" filepath="$PROJECT_DIR$/../drone-plugin-git/.idea/drone-plugin-git.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/drone-plugin-mcu.iml" filepath="$PROJECT_DIR$/.idea/drone-plugin-mcu.iml" />
       <module fileurl="file://$PROJECT_DIR$/../docker-protoc-go-inject-tag/.idea/drone-protobuf-go.iml" filepath="$PROJECT_DIR$/../docker-protoc-go-inject-tag/.idea/drone-protobuf-go.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../pangu-schedule/.idea/pangu-schedule.iml" filepath="$PROJECT_DIR$/../pangu-schedule/.idea/pangu-schedule.iml" />
     </modules>
   </component>
 </project>

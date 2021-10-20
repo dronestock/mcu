@@ -6,7 +6,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="drone-plugin-git" />
-    <orderEntry type="module" module-name="pangu-schedule" />
     <orderEntry type="module" module-name="docker-protoc-go-inject-tag" />
     <orderEntry type="module" module-name="drone-protobuf-go" />
   </component>
