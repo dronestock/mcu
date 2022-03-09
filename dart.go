@@ -48,7 +48,7 @@ func (p *plugin) dart(source string, dependencies ...dependency) (err error) {
 	}
 
 	// 执行命令
-	err = p.Exec(exeYq, drone.Args(args...), drone.Dir(source))
+	err = p.Exec(exeYq, drone.Args(args...), drone.Dir(source), drone.Envs(environments...))
 
 	return
 }
