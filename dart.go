@@ -10,9 +10,9 @@ import (
 	`github.com/storezhang/gox`
 )
 
-func (p *plugin) dart(source string, dependencies ...dependency) (undo bool, err error) {
+func (p *plugin) dart(source string, dependencies ...dependency) (err error) {
 	modulePath := filepath.Join(source, dartModuleFilename)
-	if undo = !gfx.Exist(modulePath); undo {
+	if !gfx.Exist(modulePath) {
 		return
 	}
 

@@ -8,9 +8,9 @@ import (
 	`github.com/storezhang/gfx`
 )
 
-func (p *plugin) golang(source string, dependencies ...dependency) (undo bool, err error) {
+func (p *plugin) golang(source string, dependencies ...dependency) (err error) {
 	modulePath := filepath.Join(source, goModuleFilename)
-	if undo = !gfx.Exist(modulePath); undo {
+	if !gfx.Exist(modulePath) {
 		return
 	}
 
