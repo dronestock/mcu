@@ -2,33 +2,31 @@ package main
 
 import (
 	`fmt`
-	`path`
+	`path/filepath`
 	`strings`
 
-	`github.com/storezhang/glog`
-	`github.com/storezhang/gox`
+	`github.com/storezhang/gfx`
 )
 
-func js(conf *config, _ glog.Logger) (err error) {
-	if dir, dirErr := gox.IsDir(conf.filepath); nil != dirErr {
-		panic(dirErr)
-	} else if dir {
-		conf.filepath = path.Join(conf.filepath, "package.json")
+func (p *plugin) js(source string, dependencies ...dependency) (undo bool, err error) {
+	modulePath := filepath.Join(source, jsModuleFilename)
+	if undo = !gfx.Exist(modulePath); undo {
+		return
 	}
 
 	elements := make([]jsonElement, 0, len(conf.dependencies)+1)
 	elements = append(elements, jsonElement{
-		path:  "version",
-		value: conf.version,
+		path:  `version`,
+		value: p.Version,
 	})
-	for _, _dependency := range conf.dependencies {
-		_module := strings.ReplaceAll(_dependency.name, `.`, `\.`)
+	for _, dep := range dependencies {
+		_module := strings.ReplaceAll(dep.Module, `.`, `\.`)
 		elements = append(elements, jsonElement{
 			path:  fmt.Sprintf("elements.%s", _module),
-			value: _dependency.version,
+			value: dep.Version,
 		})
 	}
-	err = json(conf.filepath, elements...)
+	err = p.json(modulePath, elements...)
 
 	return
 }

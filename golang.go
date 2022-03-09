@@ -2,41 +2,30 @@ package main
 
 import (
 	`fmt`
-	`os/exec`
-	`path`
+	`path/filepath`
 
-	`github.com/storezhang/glog`
-	`github.com/storezhang/gox`
-	`github.com/storezhang/gox/field`
+	`github.com/dronestock/drone`
+	`github.com/storezhang/gfx`
 )
 
-func golang(conf *config, logger glog.Logger) (err error) {
-	if dir, dirErr := gox.IsDir(conf.filepath); nil != dirErr {
-		panic(dirErr)
-	} else if dir {
-		conf.filepath = path.Join(conf.filepath, `go.mod`)
+func (p *plugin) golang(source string, dependencies ...dependency) (undo bool, err error) {
+	modulePath := filepath.Join(source, goModuleFilename)
+	if undo = !gfx.Exist(modulePath); undo {
+		return
 	}
 
-	commands := []string{
+	args := []interface{}{
 		`mod`,
 		`edit`,
 	}
-	for _, _dependency := range conf.dependencies {
-		commands = append(commands, `-require`, fmt.Sprintf("%s@%s", _dependency.name, _dependency.version))
+	for _, dep := range dependencies {
+		args = append(args, `-require`, fmt.Sprintf(`%s@%s`, dep.Module, dep.Version))
 	}
-	commands = append(commands, conf.filepath)
+	// 写入模块文件
+	args = append(args, modulePath)
 
 	// 执行命令
-	cmd := exec.Command(`go`, commands...)
-	if err = cmd.Run(); nil != err {
-		output, _ := cmd.CombinedOutput()
-		logger.Warn(
-			`修改Dart模块描述文件出错`,
-			field.String(`output`, string(output)),
-			field.Strings(`command`, commands...),
-			field.Error(err),
-		)
-	}
+	err = p.Exec(exeGo, drone.Args(args...), drone.Dir(source))
 
 	return
 }

@@ -1,9 +1,5 @@
 package main
 
-import (
-	`github.com/storezhang/glog`
-)
-
-func gradle(conf *config, _ glog.Logger) (err error) {
+func (p *plugin) gradle(filename string, dependencies ...dependency) (err error) {
 	return
 }

@@ -2,62 +2,53 @@ package main
 
 import (
 	`fmt`
-	`os`
-	`os/exec`
-	`path`
+	`path/filepath`
 	`strings`
 
-	`github.com/storezhang/glog`
+	`github.com/dronestock/drone`
+	`github.com/storezhang/gfx`
 	`github.com/storezhang/gox`
-	`github.com/storezhang/gox/field`
 )
 
-func dart(conf *config, logger glog.Logger) (err error) {
-	if dir, dirErr := gox.IsDir(conf.filepath); nil != dirErr {
-		panic(dirErr)
-	} else if dir {
-		conf.filepath = path.Join(conf.filepath, `pubspec.yaml`)
+func (p *plugin) dart(source string, dependencies ...dependency) (undo bool, err error) {
+	modulePath := filepath.Join(source, dartModuleFilename)
+	if undo = !gfx.Exist(modulePath); undo {
+		return
 	}
 
-	commands := []string{`eval`}
-	environments := make([]string, 0, len(conf.dependencies))
-	updates := make([]string, 0, len(conf.dependencies))
-	environments = append(environments, fmt.Sprintf(`%s=%s`, "version", conf.version))
+	environments := make([]string, 0, len(dependencies))
+	updates := make([]string, 0, len(dependencies))
+	environments = append(environments, fmt.Sprintf(`%s=%s`, "version", p.Version))
 	updates = append(updates, `.version=strenv(version)`)
-	for _, _dependency := range conf.dependencies {
+	for _, dep := range dependencies {
 		// 使用随机字符串是为了防止原始字符串里面出现环境变量不允许的字符
 		version := gox.RandString(16)
-		if _replace, replaced := conf.isReplaced(_dependency); replaced {
+		if to, replaced := p.isReplaced(dep, langDart); replaced {
 			updates = append(
 				updates,
-				fmt.Sprintf(`.dependencies.%s.git.url = %s`, _dependency.name, _replace.name),
-				fmt.Sprintf(`.dependencies.%s.git.ref = %s`, _dependency.name, _replace.version),
+				fmt.Sprintf(`.dependencies.%s.git.url = %s`, dep.Module, to.Module),
+				fmt.Sprintf(`.dependencies.%s.git.ref = %s`, dep.Module, to.Version),
 			)
 		} else {
-			updates = append(updates, fmt.Sprintf(`.dependencies.%s = strenv(%s)`, _dependency.name, version))
+			updates = append(updates, fmt.Sprintf(`.dependencies.%s = strenv(%s)`, dep.Module, version))
 		}
 		environments = append(
 			environments,
-			fmt.Sprintf(`%s=%s`, version, _dependency.version),
+			fmt.Sprintf(`%s=%s`, version, dep.Version),
 		)
 	}
-	commands = append(commands, strings.Join(updates, ` | `), conf.filepath)
-	commands = append(commands, `--inplace`, `--prettyPrint`, `--verbose`)
+
+	args := []interface{}{
+		`eval`,
+	}
+	args = append(args, strings.Join(updates, ` | `), modulePath)
+	args = append(args, `--inplace`, `--prettyPrint`)
+	if p.Verbose {
+		args = append(args, `--verbose`)
+	}
 
 	// 执行命令
-	cmd := exec.Command(`yq`, commands...)
-	cmd.Env = os.Environ()
-	cmd.Env = append(cmd.Env, environments...)
-	if err = cmd.Run(); nil != err {
-		output, _ := cmd.CombinedOutput()
-		logger.Warn(
-			`修改Dart模块描述文件出错`,
-			field.String(`output`, string(output)),
-			field.Strings(`environments`, environments...),
-			field.Strings(`command`, commands...),
-			field.Error(err),
-		)
-	}
+	err = p.Exec(exeYq, drone.Args(args...), drone.Dir(source))
 
 	return
 }

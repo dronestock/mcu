@@ -16,6 +16,8 @@ type plugin struct {
 	Source string `default:"${PLUGIN_SOURCE=${SOURCE=.}}"`
 	// 源文件目录列表
 	Sources map[string]string `default:"${PLUGIN_SOURCES=${SOURCES}}" validate:"required_without=Source"`
+	// 版本
+	Version string `default:"${PLUGIN_VERSION=${VERSION=1.0.0}}"`
 	// 依赖列表
 	Dependencies map[string][]dependency `default:"${PLUGIN_DEPENDENCIES=${DEPENDENCIES}}"`
 	// 替换列表
@@ -39,7 +41,6 @@ func (p *plugin) Setup() (unset bool, err error) {
 func (p *plugin) Steps() []*drone.Step {
 	return []*drone.Step{
 		drone.NewStep(p.updates, drone.Name(`更新`)),
-		drone.NewStep(p.replace, drone.Name(`替换`)),
 	}
 }
 
@@ -47,4 +48,15 @@ func (p *plugin) Fields() gox.Fields {
 	return []gox.Field{
 		field.Any(`sources`, p.Sources),
 	}
+}
+
+func (p *plugin) isReplaced(from dependency, lang string) (to dependency, replaced bool) {
+	for _, _replace := range p.Replaces[lang] {
+		if `` != from.Module && from.Module == _replace.From.Module {
+			replaced = true
+			to = _replace.To
+		}
+	}
+
+	return
 }

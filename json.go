@@ -7,8 +7,8 @@ import (
 	`github.com/tidwall/sjson`
 )
 
-func json(filename string, elements ...jsonElement) (err error) {
-	if "" == filename {
+func (p *plugin) json(filename string, elements ...jsonElement) (err error) {
+	if `` == filename {
 		return
 	}
 
