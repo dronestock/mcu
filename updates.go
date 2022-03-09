@@ -2,7 +2,7 @@ package main
 
 func (p *plugin) updates() (undo bool, err error) {
 	for lang := range p.Sources {
-		if undo, err = p.update(lang); nil != err {
+		if err = p.update(lang); nil != err {
 			return
 		}
 	}
