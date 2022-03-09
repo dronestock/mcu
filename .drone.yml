@@ -27,9 +27,9 @@ steps:
         path: /var/lib/docker
     settings:
       repository: dronestock/protobuf
-        username: dronestock
-        password:
-          from_secret: token_docker
+      username: dronestock
+      password:
+        from_secret: token_docker
 
 volumes:
   - name: go
