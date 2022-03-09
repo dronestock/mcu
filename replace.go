@@ -6,8 +6,14 @@ import (
 )
 
 type replace struct {
-	from module
-	to   module
+	// 从
+	From dependency `json:"from"`
+	// 到
+	To dependency `json:"to"`
+}
+
+func (p *plugin) replace() (undo bool, err error) {
+	return
 }
 
 func (r *replace) String() string {
