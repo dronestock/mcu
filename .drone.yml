@@ -26,7 +26,7 @@ steps:
       - name: docker
         path: /var/lib/docker
     settings:
-      repository: dronestock/protobuf
+      repository: dronestock/mcu
       username: dronestock
       password:
         from_secret: token_docker
