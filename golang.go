@@ -2,13 +2,14 @@ package main
 
 import (
 	`fmt`
+	`path/filepath`
 
 	`github.com/dronestock/drone`
 	`github.com/storezhang/gfx`
 )
 
 func (p *plugin) golang(source string, dependencies ...dependency) (err error) {
-	if !gfx.Exist(goModuleFilename) {
+	if !gfx.Exist(filepath.Join(source, goModuleFilename)) {
 		return
 	}
 

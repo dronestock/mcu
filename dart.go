@@ -2,6 +2,7 @@ package main
 
 import (
 	`fmt`
+	`path/filepath`
 	`strings`
 
 	`github.com/dronestock/drone`
@@ -10,7 +11,7 @@ import (
 )
 
 func (p *plugin) dart(source string, dependencies ...dependency) (err error) {
-	if !gfx.Exist(dartModuleFilename) {
+	if !gfx.Exist(filepath.Join(source, dartModuleFilename)) {
 		return
 	}
 
