@@ -2,15 +2,13 @@ package main
 
 import (
 	`fmt`
-	`path/filepath`
 
 	`github.com/dronestock/drone`
 	`github.com/storezhang/gfx`
 )
 
 func (p *plugin) golang(source string, dependencies ...dependency) (err error) {
-	modulePath := filepath.Join(source, goModuleFilename)
-	if !gfx.Exist(modulePath) {
+	if !gfx.Exist(goModuleFilename) {
 		return
 	}
 
@@ -22,7 +20,7 @@ func (p *plugin) golang(source string, dependencies ...dependency) (err error) {
 		args = append(args, `-require`, fmt.Sprintf(`%s@%s`, dep.Module, dep.Version))
 	}
 	// 写入模块文件
-	args = append(args, modulePath)
+	args = append(args, goModuleFilename)
 
 	// 执行命令
 	err = p.Exec(exeGo, drone.Args(args...), drone.Dir(source))

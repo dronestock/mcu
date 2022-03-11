@@ -2,7 +2,6 @@ package main
 
 import (
 	`fmt`
-	`path/filepath`
 	`strings`
 
 	`github.com/dronestock/drone`
@@ -11,8 +10,7 @@ import (
 )
 
 func (p *plugin) dart(source string, dependencies ...dependency) (err error) {
-	modulePath := filepath.Join(source, dartModuleFilename)
-	if !gfx.Exist(modulePath) {
+	if !gfx.Exist(dartModuleFilename) {
 		return
 	}
 
@@ -41,7 +39,7 @@ func (p *plugin) dart(source string, dependencies ...dependency) (err error) {
 	args := []interface{}{
 		`eval`,
 	}
-	args = append(args, strings.Join(updates, ` | `), modulePath)
+	args = append(args, strings.Join(updates, ` | `), dartModuleFilename)
 	args = append(args, `--inplace`, `--prettyPrint`)
 	if p.Verbose {
 		args = append(args, `--verbose`)
