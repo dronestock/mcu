@@ -1,8 +1,8 @@
 package main
 
 func (p *plugin) updates() (undo bool, err error) {
-	for lang := range p.Sources {
-		if err = p.update(lang); nil != err {
+	for typ := range p.Sources {
+		if err = p.update(typ); nil != err {
 			return
 		}
 	}

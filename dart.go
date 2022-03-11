@@ -23,7 +23,7 @@ func (p *plugin) dart(source string, dependencies ...dependency) (err error) {
 	for _, dep := range dependencies {
 		// 使用随机字符串是为了防止原始字符串里面出现环境变量不允许的字符
 		version := gox.RandString(16)
-		if to, replaced := p.isReplaced(dep, langDart); replaced {
+		if to, replaced := p.isReplaced(dep, typeDart); replaced {
 			updates = append(
 				updates,
 				fmt.Sprintf(`.dependencies.%s.git.url = %s`, dep.Module, to.Module),

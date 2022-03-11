@@ -9,9 +9,9 @@ import (
 type plugin struct {
 	drone.PluginBase
 
-	// 语言
+	// 类型
 	// nolint:lll
-	Lang string `default:"${PLUGIN_LANG=${LANG=go}}" validate:"required_without=Sources,oneof=go golang java js javascript dart"`
+	Type string `default:"${PLUGIN_TYPE=${TYPE=go}}" validate:"required_without=Sources,oneof=go golang java js javascript dart"`
 	// 源文件目录
 	Source string `default:"${PLUGIN_SOURCE=${SOURCE=.}}"`
 	// 源文件目录列表
@@ -33,7 +33,9 @@ func (p *plugin) Config() drone.Config {
 }
 
 func (p *plugin) Setup() (unset bool, err error) {
-	p.Sources[p.Lang] = p.Source
+	if 0 == len(p.Sources) {
+		p.Sources[p.Type] = p.Source
+	}
 
 	return
 }
@@ -50,8 +52,8 @@ func (p *plugin) Fields() gox.Fields {
 	}
 }
 
-func (p *plugin) isReplaced(from dependency, lang string) (to dependency, replaced bool) {
-	for _, _replace := range p.Replaces[lang] {
+func (p *plugin) isReplaced(from dependency, typ string) (to dependency, replaced bool) {
+	for _, _replace := range p.Replaces[typ] {
 		if `` != from.Module && from.Module == _replace.From.Module {
 			replaced = true
 			to = _replace.To
