@@ -11,7 +11,7 @@ type plugin struct {
 
 	// 语言
 	// nolint:lll
-	Lang string `default:"${PLUGIN_LANG=${LANG=go}}" validate:"required_without=Inputs,oneof=go golang java js javascript dart"`
+	Lang string `default:"${PLUGIN_LANG=${LANG=go}}" validate:"required_without=Sources,oneof=go golang java js javascript dart"`
 	// 源文件目录
 	Source string `default:"${PLUGIN_SOURCE=${SOURCE=.}}"`
 	// 源文件目录列表
