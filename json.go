@@ -1,10 +1,10 @@
 package main
 
 import (
-	`io/ioutil`
-	`os`
+	"io/ioutil"
+	"os"
 
-	`github.com/tidwall/sjson`
+	"github.com/tidwall/sjson"
 )
 
 func (p *plugin) json(filename string, elements ...jsonElement) (err error) {

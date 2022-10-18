@@ -1,13 +1,13 @@
 package main
 
 import (
-	`fmt`
-	`path/filepath`
-	`strings`
+	"fmt"
+	"path/filepath"
+	"strings"
 
-	`github.com/dronestock/drone`
-	`github.com/storezhang/gfx`
-	`github.com/storezhang/gox`
+	"github.com/dronestock/drone"
+	"github.com/storezhang/gfx"
+	"github.com/storezhang/gox"
 )
 
 func (p *plugin) dart(source string, dependencies ...dependency) (err error) {

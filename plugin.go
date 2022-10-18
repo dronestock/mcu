@@ -1,9 +1,9 @@
 package main
 
 import (
-	`github.com/dronestock/drone`
-	`github.com/storezhang/gox`
-	`github.com/storezhang/gox/field`
+	"github.com/dronestock/drone"
+	"github.com/storezhang/gox"
+	"github.com/storezhang/gox/field"
 )
 
 type plugin struct {

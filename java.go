@@ -1,9 +1,9 @@
 package main
 
 import (
-	`path/filepath`
+	"path/filepath"
 
-	`github.com/storezhang/gfx`
+	"github.com/storezhang/gfx"
 )
 
 func (p *plugin) java(source string, dependencies ...dependency) (err error) {

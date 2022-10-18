@@ -1,11 +1,11 @@
 package main
 
 import (
-	`fmt`
-	`path/filepath`
-	`strings`
+	"fmt"
+	"path/filepath"
+	"strings"
 
-	`github.com/storezhang/gfx`
+	"github.com/storezhang/gfx"
 )
 
 func (p *plugin) js(source string, dependencies ...dependency) (err error) {

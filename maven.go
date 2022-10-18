@@ -1,9 +1,9 @@
 package main
 
 import (
-	`fmt`
+	"fmt"
 
-	`github.com/beevik/etree`
+	"github.com/beevik/etree"
 )
 
 const (

@@ -1,12 +1,12 @@
 package main
 
 import (
-	`fmt`
-	`path/filepath`
-	`strings`
+	"fmt"
+	"path/filepath"
+	"strings"
 
-	`github.com/dronestock/drone`
-	`github.com/storezhang/gfx`
+	"github.com/dronestock/drone"
+	"github.com/storezhang/gfx"
 )
 
 func (p *plugin) golang(source string, dependencies ...dependency) (err error) {
