@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io/ioutil"
 	"os"
 
 	"github.com/tidwall/sjson"
@@ -13,7 +12,7 @@ func (p *plugin) json(filename string, elements ...jsonElement) (err error) {
 	}
 
 	var content []byte
-	if content, err = ioutil.ReadFile(filename); nil != err {
+	if content, err = os.ReadFile(filename); nil != err {
 		return
 	}
 
@@ -22,7 +21,7 @@ func (p *plugin) json(filename string, elements ...jsonElement) (err error) {
 			return
 		}
 	}
-	err = ioutil.WriteFile(filename, content, os.ModePerm)
+	err = os.WriteFile(filename, content, os.ModePerm)
 
 	return
 }
