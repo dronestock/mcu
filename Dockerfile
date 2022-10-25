@@ -11,6 +11,8 @@ RUN chmod +x /usr/bin/yq
 
 
 
+
+
 # 打包真正的镜像
 FROM storezhang/alpine
 

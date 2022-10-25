@@ -1,5 +1,5 @@
 package main
 
-func (p *plugin) gradle(filename string, dependencies ...dependency) (err error) {
+func (p *plugin) gradle(_ string, _ []string) (err error) {
 	return
 }

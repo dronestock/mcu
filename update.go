@@ -1,17 +1,15 @@
 package main
 
-func (p *plugin) update(typ string) (err error) {
-	source := p.Sources[typ]
-	dependencies := p.Dependencies[typ]
-	switch typ {
+func (p *plugin) update(dependency dependency) (err error) {
+	switch dependency.Type {
 	case typeGo, typeGolang:
-		err = p.golang(source, dependencies...)
+		err = p.golang(dependency.Source, dependency.Modules)
 	case typeJava:
-		err = p.java(source, dependencies...)
+		err = p.java(dependency.Source, dependency.Modules)
 	case typeJs, typeJavascript:
-		err = p.js(source)
+		err = p.js(dependency.Source, dependency.Modules)
 	case typeDart:
-		err = p.dart(source, dependencies...)
+		err = p.dart(dependency.Source, dependency.Modules)
 	}
 
 	return

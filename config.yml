@@ -1,0 +1,18 @@
+steps:
+  - name: 模块
+    image: dronestock/mcu
+    settings:
+      modules:
+        - label: core
+          name: github.com/sichuancredit/core
+          group: cn.sichuancredit
+          artifact: core
+          version: $${CORE_VERSION}
+      dependencies:
+        - type: java
+          source: lang/java
+          modules:
+            - core
+      replaces:
+        - from: core
+          to: core

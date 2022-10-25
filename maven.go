@@ -16,7 +16,7 @@ const (
 	dependencyFormat = `dependency[groupId=%s and artifactId=%s]`
 )
 
-func (p *plugin) maven(filename string, dependencies ...dependency) (err error) {
+func (p *plugin) maven(filename string, labels []string) (err error) {
 	doc := etree.NewDocument()
 	if err = doc.ReadFromFile(filename); nil != err {
 		return
@@ -33,25 +33,14 @@ func (p *plugin) maven(filename string, dependencies ...dependency) (err error) 
 	}
 	version.SetText(p.Version)
 
-	dependenciesElement := project.SelectElement(keyDependencies)
-	if nil == dependenciesElement {
-		dependenciesElement = project.CreateElement(keyDependencies)
+	dependencies := project.SelectElement(keyDependencies)
+	if nil == dependencies {
+		dependencies = project.CreateElement(keyDependencies)
 	}
 
-	// 修改依赖
-	for _, dep := range dependencies {
-		path := etree.MustCompilePath(fmt.Sprintf(dependencyFormat, dep.Group, dep.Artifact))
-		dependencyElement := dependenciesElement.FindElementPath(path)
-		if nil == dependencyElement {
-			dependencyElement = dependenciesElement.CreateElement(keyDependency)
-			dependencyElement.CreateElement(keyGroupId).SetText(dep.Group)
-			dependencyElement.CreateElement(keyArtifactId).SetText(dep.Artifact)
-			dependencyElement.CreateElement(keyVersion).SetText(dep.Version)
-		} else {
-			dependencyElement.SelectElement(keyGroupId).SetText(dep.Group)
-			dependencyElement.SelectElement(keyArtifactId).SetText(dep.Artifact)
-			dependencyElement.SelectElement(keyVersion).SetText(dep.Version)
-		}
+	// 处理依赖模块
+	if err = p.each(labels, p.mavenModules(dependencies)); nil != err {
+		return
 	}
 
 	// 写入文件
@@ -59,4 +48,21 @@ func (p *plugin) maven(filename string, dependencies ...dependency) (err error) 
 	err = doc.WriteToFile(filename)
 
 	return
+}
+
+func (p *plugin) mavenModules(dependencies *etree.Element) moduleFunc {
+	return func(module *module) {
+		path := etree.MustCompilePath(fmt.Sprintf(dependencyFormat, module.Group, module.Artifact))
+		_dependency := dependencies.FindElementPath(path)
+		if nil == _dependency {
+			_dependency = dependencies.CreateElement(keyDependency)
+			_dependency.CreateElement(keyGroupId).SetText(module.Group)
+			_dependency.CreateElement(keyArtifactId).SetText(module.Artifact)
+			_dependency.CreateElement(keyVersion).SetText(module.Version)
+		} else {
+			_dependency.SelectElement(keyGroupId).SetText(module.Group)
+			_dependency.SelectElement(keyArtifactId).SetText(module.Artifact)
+			_dependency.SelectElement(keyVersion).SetText(module.Version)
+		}
+	}
 }
