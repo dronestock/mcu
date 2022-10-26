@@ -31,7 +31,7 @@ steps:
       PASSWORD_CCR:
         from_secret: password_tencentyun_ccr
     settings:
-      repository: dronestock/protobuf
+      repository: dronestock/mcu
       registries:
         - username: dronestock
           password: $${PASSWORD_DOCKER}
