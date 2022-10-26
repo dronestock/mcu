@@ -1,6 +1,6 @@
 package main
 
-func (p *plugin) update(dependency dependency) (err error) {
+func (p *plugin) update(dependency *dependency) (err error) {
 	switch dependency.Type {
 	case typeGo, typeGolang:
 		err = p.golang(dependency.Source, dependency.Modules)

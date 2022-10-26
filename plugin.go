@@ -15,7 +15,7 @@ type plugin struct {
 	// 模块列表
 	Modules []*module `default:"${PLUGIN_MODULES=${MODULES}}" validate:"required,gte=1"`
 	// 依赖列表
-	Dependencies []dependency `default:"${PLUGIN_DEPENDENCIES=${DEPENDENCIES}}"`
+	Dependencies []*dependency `default:"${PLUGIN_DEPENDENCIES=${DEPENDENCIES}}"`
 
 	modules map[string]*module
 }
