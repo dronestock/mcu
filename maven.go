@@ -7,13 +7,13 @@ import (
 )
 
 const (
-	keyProject       = `project`
-	keyVersion       = `version`
-	keyDependencies  = `dependencies`
-	keyDependency    = `dependency`
-	keyGroupId       = `groupId`
-	keyArtifactId    = `artifactId`
-	dependencyFormat = `dependency[groupId=%s and artifactId=%s]`
+	keyProject      = `project`
+	keyVersion      = `version`
+	keyDependencies = `dependencies`
+	keyDependency   = `dependency`
+	keyGroupId      = `groupId`
+	keyArtifactId   = `artifactId`
+	groupFormat     = `dependency[groupId='%s']`
 )
 
 func (p *plugin) maven(filename string, labels []string) (err error) {
@@ -52,17 +52,31 @@ func (p *plugin) maven(filename string, labels []string) (err error) {
 
 func (p *plugin) mavenModules(dependencies *etree.Element) moduleFunc {
 	return func(module *module) {
-		path := etree.MustCompilePath(fmt.Sprintf(dependencyFormat, module.Group, module.Artifact))
-		_dependency := dependencies.FindElementPath(path)
+		_dependency := p.findByGroup(dependencies, module.Group, module.Artifact)
 		if nil == _dependency {
 			_dependency = dependencies.CreateElement(keyDependency)
 			_dependency.CreateElement(keyGroupId).SetText(module.Group)
 			_dependency.CreateElement(keyArtifactId).SetText(module.Artifact)
 			_dependency.CreateElement(keyVersion).SetText(module.Version)
 		} else {
-			_dependency.SelectElement(keyGroupId).SetText(module.Group)
-			_dependency.SelectElement(keyArtifactId).SetText(module.Artifact)
 			_dependency.SelectElement(keyVersion).SetText(module.Version)
 		}
 	}
+}
+
+// 解决不了XPath同时选取两个子节点值的问题，特意加的方法，如果找到解决办法可用XPath解决
+func (p *plugin) findByGroup(dependencies *etree.Element, group string, artifact string) (dependency *etree.Element) {
+	elements := dependencies.FindElements(fmt.Sprintf(groupFormat, group))
+	for _, element := range elements {
+		artifactId := element.SelectElement(keyArtifactId)
+		if nil != artifactId && artifact == artifactId.Text() {
+			dependency = element
+		}
+
+		if nil != dependency {
+			return
+		}
+	}
+
+	return
 }
