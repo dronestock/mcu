@@ -1,6 +1,6 @@
 kind: pipeline
 type: docker
-name: 模块配置更新器
+name: 发布
 
 
 clone:

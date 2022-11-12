@@ -40,7 +40,7 @@ func (p *plugin) Setup() (unset bool, err error) {
 
 func (p *plugin) Steps() []*drone.Step {
 	return []*drone.Step{
-		drone.NewStep(p.updates, drone.Name(`更新`)),
+		drone.NewStep(p.updates, drone.Name(`更新`), drone.Interrupt()),
 	}
 }
 
