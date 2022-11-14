@@ -6,7 +6,7 @@ require (
 	github.com/beevik/etree v1.1.0
 	github.com/dronestock/drone v0.5.3
 	github.com/goexl/exc v0.0.4
-	github.com/goexl/gfx v0.1.3
+	github.com/goexl/gfx v0.1.6
 	github.com/goexl/gox v0.1.2
 	github.com/tidwall/sjson v1.2.5
 )
