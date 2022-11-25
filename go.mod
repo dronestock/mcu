@@ -5,9 +5,9 @@ go 1.18
 require (
 	github.com/beevik/etree v1.1.0
 	github.com/dronestock/drone v0.5.6
-	github.com/goexl/exc v0.0.4
+	github.com/goexl/exc v0.0.5
 	github.com/goexl/gfx v0.1.6
-	github.com/goexl/gox v0.1.2
+	github.com/goexl/gox v0.1.3
 	github.com/tidwall/sjson v1.2.5
 )
 
@@ -25,7 +25,6 @@ require (
 	github.com/goexl/xiren v0.0.3 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
-	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/rs/xid v1.4.0 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/tidwall/gjson v1.14.2 // indirect
