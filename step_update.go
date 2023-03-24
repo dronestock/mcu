@@ -7,8 +7,6 @@ import (
 
 type stepUpdate struct {
 	*plugin
-
-	printed bool
 }
 
 func newUpdateStep(plugin *plugin) *stepUpdate {
