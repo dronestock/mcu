@@ -7,7 +7,7 @@ COPY --from=yq /usr/bin/yq /docker/usr/bin/yq
 COPY --from=golang /usr/local/go/bin/go /docker/usr/bin/go
 # 增加这一步是因为go命令在执行时，需要GOROOT目录，而正常的GOROOT目录是/usr/local/go
 COPY --from=golang /usr/local/go/VERSION /docker/usr/local/go/VERSION
-COPY mcu /docker/usr/local/bin
+COPY mcu /docker/usr/local/bin/mcu
 
 
 
