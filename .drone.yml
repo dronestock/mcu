@@ -30,10 +30,10 @@ clone:
 
 
 environment:
-  NAME: deploy
-  OUTPUT_LINUX: deploy.amd64.lin
-  OUTPUT_WINDOWS: deploy.amd64.exe
-  OUTPUT_MAC: deploy.amd64.mac
+  NAME: mcu
+  OUTPUT_LINUX: mcu.amd64.lin
+  OUTPUT_WINDOWS: mcu.amd64.exe
+  OUTPUT_MAC: mcu.amd64.mac
   CHANGELOG_TAG_OUTPUT: CHANGELOG.tag.md
 
 
@@ -73,7 +73,7 @@ steps:
       PASSWORD_CCR:
         from_secret: password_ccr
     settings:
-      repository: dronestock/deploy
+      repository: dronestock/mcu
       registries:
         - username: dronestock
           password: $${PASSWORD_DOCKER}
