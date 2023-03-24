@@ -1,36 +1,29 @@
-FROM golang:alpine AS yq
+FROM dockerproxy.com/mikefarah/yq:4.32.2 AS yq
+FROM dockerproxy.com/library/golang:1.20.2-alpine AS golang
+FROM ccr.ccs.tencentyun.com/storezhang/alpine:3.17.2 AS builder
 
-
-# Yaml修改程序版本
-ENV YQ_VERSION 4.21.1
-ENV YQ_BINARY yq_linux_amd64
-
-
-RUN wget https://ghproxy.com/https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/${YQ_BINARY} --output-document /usr/bin/yq
-RUN chmod +x /usr/bin/yq
-
-
+# 复制文件
+COPY --from=yq /usr/bin/yq /docker/usr/bin/yq
+COPY --from=golang /usr/local/go/bin/go /docker/usr/bin/go
+# 增加这一步是因为go命令在执行时，需要GOROOT目录，而正常的GOROOT目录是/usr/local/go
+COPY --from=golang /usr/local/go/VERSION /docker/usr/local/go/VERSION
+COPY mcu /docker/usr/local/bin
 
 
 
 # 打包真正的镜像
-FROM storezhang/alpine
+FROM ccr.ccs.tencentyun.com/storezhang/alpine:3.17.2
 
 
-LABEL author="storezhang<华寅>"
-LABEL email="storezhang@gmail.com"
-LABEL qq="160290688"
-LABEL wechat="storezhang"
-LABEL description="Drone持续集成模块化插件，可以修改模块描述文件以及更新依赖"
+LABEL author="storezhang<华寅>" \
+    email="storezhang@gmail.com" \
+    qq="160290688" \
+    wechat="storezhang" \
+    description="Drone持续集成模块化插件，可以修改模块描述文件以及更新依赖"
 
 
-# 复制文件
-COPY --from=yq /usr/bin/yq /usr/bin/yq
-COPY --from=yq /usr/local/go/bin/go /usr/bin/go
-# 增加这一步是因为go命令在执行时，需要GOROOT目录，而正常的GOROOT目录是/usr/local/go
-COPY --from=yq /usr/local/go/VERSION /usr/local/go/VERSION
-COPY mcu /bin
-
+# 一次性复制所有程序，如果有多个COPY命令需要通过多Builder模式减少COPY登岛
+COPY --from=builder /docker /
 
 
 RUN set -ex \
@@ -38,7 +31,7 @@ RUN set -ex \
     \
     \
     # 增加执行权限
-    && chmod +x /bin/mcu \
+    && chmod +x /usr/local/bin/mcu \
     \
     \
     \
@@ -46,4 +39,4 @@ RUN set -ex \
 
 
 
-ENTRYPOINT /bin/mcu
+ENTRYPOINT /usr/local/bin/mcu
