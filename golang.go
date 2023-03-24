@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/dronestock/drone"
 	"github.com/goexl/gfx"
+	"github.com/goexl/gox/args"
 )
 
 func (p *plugin) golang(source string, labels []string) (err error) {
@@ -14,29 +14,27 @@ func (p *plugin) golang(source string, labels []string) (err error) {
 		return
 	}
 
-	args := []any{
-		`mod`,
-		`edit`,
-	}
-
+	ab := args.New().Long(strikethrough).Build()
+	ab.Subcommand("mod", "edit")
 	// 处理依赖模块
-	if err = p.each(labels, p.golangModules(args)); nil != err {
+	if err = p.each(labels, p.golangModules(ab)); nil != err {
 		return
 	}
+
 	// 写入模块文件
-	args = append(args, goModuleFilename)
+	ab.Add(goModuleFilename)
 	// 执行命令
-	err = p.Exec(exeGo, drone.Args(args...), drone.Dir(source))
+	_, err = p.Command(p.Binary.Go).Args(ab.Build()).Dir(source).Build().Exec()
 
 	return
 }
 
-func (p *plugin) golangModules(args []any) moduleFunc {
+func (p *plugin) golangModules(args *args.Builder) moduleFunc {
 	return func(module *module) {
 		version := module.Version
 		if !strings.HasPrefix(version, goVersionPrefix) {
-			version = fmt.Sprintf(`%s%s`, goVersionPrefix, version)
+			version = fmt.Sprintf("%s%s", goVersionPrefix, version)
 		}
-		args = append(args, `-require`, fmt.Sprintf(`%s@%s`, module.Name, version))
+		args.Arg("require", fmt.Sprintf("%s@%s", module.Name, version))
 	}
 }

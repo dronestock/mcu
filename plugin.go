@@ -10,6 +10,8 @@ import (
 type plugin struct {
 	drone.Base
 
+	// 执行程序
+	Binary binary `default:"${BINARY}"`
 	// 版本
 	Version string `default:"${PLUGIN_VERSION=${VERSION=1.0.0}}"`
 	// 模块列表
@@ -30,7 +32,7 @@ func (p *plugin) Config() drone.Config {
 	return p
 }
 
-func (p *plugin) Setup() (unset bool, err error) {
+func (p *plugin) Setup() (err error) {
 	for _, _module := range p.Modules {
 		p.modules[_module.Label] = _module
 	}
@@ -38,17 +40,17 @@ func (p *plugin) Setup() (unset bool, err error) {
 	return
 }
 
-func (p *plugin) Steps() []*drone.Step {
-	return []*drone.Step{
-		drone.NewStep(p.updates, drone.Name(`更新`), drone.Interrupt()),
+func (p *plugin) Steps() drone.Steps {
+	return drone.Steps{
+		drone.NewStep(newUpdateStep(p)).Name("更新").Interrupt().Build(),
 	}
 }
 
-func (p *plugin) Fields() gox.Fields {
-	return []gox.Field{
-		field.String(`version`, p.Version),
-		field.Any(`modules`, p.Modules),
-		field.Any(`dependencies`, p.Dependencies),
+func (p *plugin) Fields() gox.Fields[any] {
+	return gox.Fields[any]{
+		field.New("version", p.Version),
+		field.New("modules", p.Modules),
+		field.New("dependencies", p.Dependencies),
 	}
 }
 
@@ -57,7 +59,7 @@ func (p *plugin) each(labels []string, fun moduleFunc) (err error) {
 		if _module, ok := p.modules[label]; ok {
 			fun(_module)
 		} else {
-			err = exc.NewField(`指定的模块没有定义`, field.String(`label`, label))
+			err = exc.NewField("指定的模块没有定义", field.New("label", label))
 		}
 
 		if nil != err {

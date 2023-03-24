@@ -1,6 +1,6 @@
 module github.com/dronestock/mcu
 
-go 1.18
+go 1.19
 
 require (
 	github.com/beevik/etree v1.1.0
@@ -41,6 +41,3 @@ require (
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
 )
-
-// replace github.com/storezhang/gox => ../gox
-// replace github.com/storezhang/gox => ../pangu
