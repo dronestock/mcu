@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/beevik/etree v1.1.4
-	github.com/dronestock/drone v1.0.0
+	github.com/dronestock/drone v1.0.1
 	github.com/goexl/exc v0.0.5
 	github.com/goexl/gfx v0.1.7
 	github.com/goexl/gox v0.3.4
