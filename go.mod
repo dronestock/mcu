@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/beevik/etree v1.2.0
-	github.com/dronestock/drone v1.0.1
+	github.com/dronestock/drone v1.0.2
 	github.com/goexl/exc v0.0.5
 	github.com/goexl/gfx v0.1.7
 	github.com/goexl/gox v0.3.4
@@ -12,7 +12,7 @@ require (
 )
 
 require (
-	github.com/antonmedv/expr v1.12.5 // indirect
+	github.com/antonmedv/expr v1.12.6 // indirect
 	github.com/drone/envsubst v1.0.3 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
