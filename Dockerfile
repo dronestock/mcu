@@ -1,6 +1,6 @@
 FROM dockerproxy.com/mikefarah/yq:4.40.3 AS yq
 FROM dockerproxy.com/library/golang:1.21.4-alpine AS golang
-FROM ccr.ccs.tencentyun.com/storezhang/alpine:3.18.4 AS builder
+FROM ccr.ccs.tencentyun.com/storezhang/alpine:3.18.5 AS builder
 
 # 复制文件
 COPY --from=yq /usr/bin/yq /docker/usr/bin/yq
@@ -12,7 +12,7 @@ COPY mcu /docker/usr/local/bin/mcu
 
 
 # 打包真正的镜像
-FROM ccr.ccs.tencentyun.com/storezhang/alpine:3.18.4
+FROM ccr.ccs.tencentyun.com/storezhang/alpine:3.18.5
 
 
 LABEL author="storezhang<华寅>" \
