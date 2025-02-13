@@ -1,5 +1,5 @@
 FROM dockerproxy.com/mikefarah/yq:4.45.1 AS yq
-FROM dockerproxy.com/library/golang:1.23-alpine AS golang
+FROM dockerproxy.com/library/golang:1.24-alpine AS golang
 FROM ccr.ccs.tencentyun.com/storezhang/alpine:3.20.0 AS builder
 
 # 复制文件
