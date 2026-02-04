@@ -1,4 +1,4 @@
-FROM dockerproxy.com/mikefarah/yq:4.50.1 AS yq
+FROM dockerproxy.com/mikefarah/yq:4.52.2 AS yq
 FROM dockerproxy.com/library/golang:1.25-alpine AS golang
 FROM ccr.ccs.tencentyun.com/storezhang/alpine:3.20.0 AS builder
 
