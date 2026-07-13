@@ -3,7 +3,7 @@ module github.com/dronestock/mcu
 go 1.25.0
 
 require (
-	github.com/beevik/etree v1.6.0
+	github.com/beevik/etree v1.7.0
 	github.com/dronestock/drone v1.0.2
 	github.com/goexl/exc v0.0.5
 	github.com/goexl/gfx v0.2.8
